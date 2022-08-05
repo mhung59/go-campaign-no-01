@@ -1,0 +1,4 @@
+# github.com/mhung59/go-campaign v0.0.0-20220804104341-4170964c786f
+## explicit; go 1.17
+github.com/mhung59/go-campaign/pkg/model
+github.com/mhung59/go-campaign/pkg/services
