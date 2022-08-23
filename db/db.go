@@ -10,12 +10,14 @@ var db *gorm.DB
 
 func Init() {
 	dsn := "root:password@tcp(localhost:3306)/gocompaign?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	conn, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
 
-	db.AutoMigrate(&model.User{})
+	conn.AutoMigrate(&model.User{})
+
+	db = conn
 }
 
 func Manager() *gorm.DB {

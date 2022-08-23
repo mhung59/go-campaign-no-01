@@ -6,15 +6,14 @@ import (
 
 type User struct {
 	gorm.Model
-	Id   int
+	Id   int `gorm:"primaryKey"`
 	Name string
 	Deps string
 	Age  int
 }
 
-func NewUser(id int, name string, deps string, age int) *User {
+func NewUser(name string, deps string, age int) *User {
 	return &User{
-		Id:   id,
 		Name: name,
 		Deps: deps,
 		Age:  age,

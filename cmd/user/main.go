@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"go-campaign-no-02/internal/service"
+	"go-campaign-no-02/db"
 )
 
 func main() {
-	fmt.Println(service.GetUser())
-
+	db.Init()
 }
