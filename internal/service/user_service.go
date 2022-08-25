@@ -8,28 +8,45 @@ import (
 
 type UserService interface {
 	UpdateInfoUser(id int, values string)
-	CreateUser(id int, name string, deps string, age int) model.User
+	CreateUser(name string, deps string, age int) model.User
 	GetUser() []model.User
 	GetUserById(id int) model.User
 }
 
 type UserServiceImpl struct {
-	userDb *gorm.DB
+	dbc *gorm.DB
 }
 
-func UpdateInfoUser(userModify model.User) {
-	//
+var instanceUserService *UserServiceImpl
+
+func NewUserService() *UserServiceImpl {
+	if instanceUserService == nil {
+		instanceUserService = &UserServiceImpl{
+			dbc: db.Manager(),
+		}
+	}
+	return instanceUserService
 }
 
-func CreateUser(name string, deps string, age int) model.User {
+func (UserServiceImpl) UpdateInfoUser(id int, values string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (r UserServiceImpl) CreateUser(name string, deps string, age int) model.User {
 	u := model.NewUser(name, deps, age)
-	db.Manager().Create(u)
+	r.dbc.Create(u)
 	return *u
 }
 
-func GetUser() []model.User {
+func (r UserServiceImpl) GetUser() []model.User {
 	var users []model.User
-	db.Manager().Find(&users)
+	r.dbc.Find(&users)
 
 	return users
+}
+
+func (r UserServiceImpl) GetUserById(id int) model.User {
+	//TODO implement me
+	panic("implement me")
 }
