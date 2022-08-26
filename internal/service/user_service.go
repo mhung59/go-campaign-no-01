@@ -9,6 +9,7 @@ import (
 type UserService interface {
 	UpdateInfoUser(id int, values string)
 	CreateUser(name string, deps string, age int) model.User
+	DeleteUser(name string) string
 	GetUser() []model.User
 	GetUserById(id int) model.User
 }
@@ -49,4 +50,16 @@ func (r UserServiceImpl) GetUser() []model.User {
 func (r UserServiceImpl) GetUserById(id int) model.User {
 	//TODO implement me
 	panic("implement me")
+}
+
+func (r UserServiceImpl) DeleteUser(name string) string {
+	user := r.dbc.Find("name = ?", name)
+
+	if user == nil {
+		return "user not found"
+	}
+
+	r.dbc.Delete("name = ?", name)
+
+	return "deleted user " + name
 }

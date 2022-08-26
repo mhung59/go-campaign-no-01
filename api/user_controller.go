@@ -11,6 +11,7 @@ type UserController interface {
 	GetUser(c echo.Context) error
 	GetUserById(c echo.Context) error
 	CreateUser(c echo.Context) error
+	DeleteUser(c echo.Context) error
 }
 
 type UserControllerImpl struct {
@@ -50,8 +51,20 @@ func (r UserControllerImpl) CreateUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, user)
 }
 
+func (r UserControllerImpl) DeleteUser(c echo.Context) error {
+
+	name := c.Param("name")
+
+	user := r.userService.DeleteUser(name)
+
+	return c.JSON(http.StatusOK, user)
+
+	panic("implement me")
+}
+
 func UserControllerRouter(e *echo.Group) {
 	controller := NewUserController()
 	e.GET("/all-user", controller.GetUser)
-	e.POST("/create", controller.CreateUser)
+	e.POST("/create-user", controller.CreateUser)
+	e.GET("/delete-user", controller.DeleteUser)
 }

@@ -6,10 +6,10 @@ import (
 
 type User struct {
 	gorm.Model
-	ID   int `gorm:"primaryKey"`
-	Name string
-	Deps string
-	Age  int
+	ID   int    `gorm:"primaryKey", json:"id"`
+	Name string `json:"name"`
+	Deps string `json:"deps"`
+	Age  int    `json:"age"`
 }
 
 func NewUser(name string, deps string, age int) *User {
