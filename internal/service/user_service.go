@@ -2,6 +2,7 @@ package service
 
 import (
 	"go-campaign-no-02/db"
+	"go-campaign-no-02/internal/dto"
 	"go-campaign-no-02/internal/model"
 	"gorm.io/gorm"
 )
@@ -10,7 +11,7 @@ type UserService interface {
 	UpdateInfoUser(id int, values string)
 	CreateUser(name string, deps string, age int) model.User
 	DeleteUser(name string) string
-	GetUser() []model.User
+	GetUser() []dto.UserRes
 	GetUserById(id int) model.User
 }
 
@@ -40,11 +41,19 @@ func (r UserServiceImpl) CreateUser(name string, deps string, age int) model.Use
 	return *u
 }
 
-func (r UserServiceImpl) GetUser() []model.User {
+func (r UserServiceImpl) GetUser() []dto.UserRes {
 	var users []model.User
 	r.dbc.Find(&users)
+	usersRes := make([]dto.UserRes, len(users))
 
-	return users
+	for i := 0; i < len(users); i++ {
+		usersRes[i].Id = users[i].ID
+		usersRes[i].Name = users[i].Name
+		usersRes[i].Deps = users[i].Deps
+		usersRes[i].Age = users[i].Age
+	}
+
+	return usersRes
 }
 
 func (r UserServiceImpl) GetUserById(id int) model.User {
